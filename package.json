@@ -15,7 +15,13 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
+    "git-cz": "^4.9.0",
     "sass": "^1.62.1",
     "vite": "^4.3.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
   }
 }
