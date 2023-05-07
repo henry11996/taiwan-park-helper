@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && zip -r dist/taiwan-park-helper.zip dist/*",
     "preview": "vite preview"
   },
   "dependencies": {
