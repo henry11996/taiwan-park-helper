@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "Climber",
+  "version": "1.0",
+  "icons": {
+    "16": "images/16.png",
+    "32": "images/32.png",
+    "48": "images/48.png",
+    "64": "images/64.png",
+    "128": "images/128.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "images/16.png",
+      "32": "images/32.png",
+      "48": "images/48.png",
+      "64": "images/64.png",
+      "128": "images/128.png"
+    },
+    "matches": [
+      "https://npm.cpami.gov.tw/*"
+    ]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://npm.cpami.gov.tw/*"
+      ],
+      "js": [
+        "resources/jquery-3.6.4.min.js",
+        "content_scripts/readme.js",
+        "content_scripts/members.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+
+/* customize primary dark */
+$primary: #001199;
+
+[data-bs-theme="dark"] {
+  --bs-primary: #{$primary};
+  --bs-primary-bg-subtle: #{$primary};
+  --bs-primary-bg-subtle-dark: #{$primary};
+  
+  .btn-primary {
+    --bs-btn-bg: #{$primary};
+  }
+}
