@@ -1,57 +1,37 @@
 console.log("members loaded")
 
 var members = {}
+var hasRegisterEvent = false
 const memberKey = '身分證字號'
-const injectSelectorIds = ['member', 'ContentPlaceHolder1_applydiv', 'ContentPlaceHolder1_upLeader']
+const injectSelectorIds = ['member', 'collapseOne', 'collapseTwo', 'collapseFour'] // 'ContentPlaceHolder1_applydiv', 'ContentPlaceHolder1_upLeader'
 
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  console.log("member received")
-  members = message.members
-  removeSelectors()
-  injectSelectors(message.members)
-  sendResponse({ message: "message received" })
-})
-
-function removeSelectors() {
+function injectSelectors() {
   injectSelectorIds.forEach((id) => {
-    if ($('body').has(`#${id}`)) {
-      const target = $('body').find(`div[id^='${id}']`)
-      if (id == 'member') {
-        target.find('div#inject-selector-div').remove()
-      } else if (id == 'ContentPlaceHolder1_applydiv') {
-        target.find('div#inject-selector-applier-div').remove()
-      } else if (id == 'ContentPlaceHolder1_upLeader') {
-        target.find('div#inject-selector-leader-div').remove()
-      }
+    if (!$('body').has(`#${id}`)) return
+    if (id == 'member') {
+      // 隊員資料
+      $(`div[id^='${id}']`).each(function () {
+        if ($(this).has('div#inject-selector-div').length == 0) {
+          $(this).find('div.panel-body').prepend(autoSelector(members, 'inject-selector'))
+        }
+      })
+    } else if (!$(`div#${id} #inject-selector`).length && $(`div#${id} input[name*='name']`).length) {
+      // 其他申請人資料
+      $(autoSelector(members, 'inject-selector')).insertAfter(`#${id} .checkbox`)
     }
   })
+  if (!hasRegisterEvent) {
+    hasRegisterEvent = true
+    $("select[id^='inject-selector']").off('change');
+    $("select[id^='inject-selector']").on('change', function (e) {
+      // console.log('member ' + e.target.value)
+      autoFill(e, members, '.panel-body')
+    })
+  }
 }
 
-function injectSelectors(members) {
-  injectSelectorIds.forEach((id) => {
-    if ($('body').has(`#${id}`)) {
-      const target = $('body').find(`div[id^='${id}']`)
-      if (id == 'member' && !$('div#inject-selector-div').length) {
-        target.find('div.panel-body').prepend(autoSelector(members, 'inject-selector'))
-        $("select[id^='inject-selector']").on('change', function (e) {
-          console.log('member ' + e.target.value)
-          autoFill(e, members, '.panel-body')
-        })
-      } else if (id == 'ContentPlaceHolder1_applydiv' && !$('div#inject-selector-applier-div').length) {
-        target.prepend(autoSelector(members, 'inject-selector-applier'))
-        $("select[id^='inject-selector-applier']").on('change', function (e) {
-          console.log('apply ' + e.target.value)
-          autoFill(e, members, '.panel-body')
-        })
-      } else if (id == 'ContentPlaceHolder1_upLeader' && !$('div#inject-selector-leader-div').length) {
-        $(autoSelector(members, 'inject-selector-leader')).insertAfter("#ContentPlaceHolder1_upLeader .checkbox")
-        $("select[id^='inject-selector-leader']").on('change', function (e) {
-          console.log('leader ' + e.target.value)
-          autoFill(e, members, '.panel-body')
-        })
-      }
-    }
-  })
+function removeSelectors() {
+  $("div#inject-selector-div").remove()
 }
 
 function autoFill(e, members, parentFormClass) {
@@ -118,14 +98,14 @@ const toBase64 = file => new Promise((resolve, reject) => {
 });
 
 //等待元素出現
-waitForElm('div#accordion').then(e => {
+waitForElm("div:contains('隊員資料')").then(e => {
   const block = $("<div></div>")
     .addClass("panel")
     .css("background-color", "#390")
     .css("padding", "10px")
     .css("margin-top", "13px")
     .css("border", "10px solid darkorange")
-    .insertAfter("div#ContentPlaceHolder1_upStep21")
+    .insertAfter($("div.text-right").first())
 
   const panel = $("<div></div>")
     .css("display", "flex")
@@ -178,9 +158,9 @@ waitForElm('div#accordion').then(e => {
     }
     const buffer = await file.arrayBuffer();
     members = xlsxToArray(buffer, memberKey);
-    console.log(members);
+    // console.log(members);
     removeSelectors()
-    injectSelectors(members)
+    injectSelectors()
     e.target.value = ''
     alert('上傳成功')
   })
@@ -194,7 +174,7 @@ waitForElm('div#accordion').then(e => {
   // 建立循環監聽
   MutationObserver = window.MutationObserver || window.WebKitMutationObserver
   var observer = new MutationObserver(function (mutations, observer) {
-    injectSelectors(members)
+    injectSelectors()
   })
 
   observer.observe(document.getElementById('accordion'), {
@@ -206,13 +186,13 @@ waitForElm('div#accordion').then(e => {
 
 function waitForElm(selector) {
   return new Promise(resolve => {
-    if (document.querySelector(selector)) {
-      return resolve(document.querySelector(selector));
+    if ($(selector).length > 0) {
+      return resolve($(selector));
     }
 
     const observer = new MutationObserver(mutations => {
-      if (document.querySelector(selector)) {
-        resolve(document.querySelector(selector));
+      if ($(selector).length > 0) {
+        resolve($(selector));
         observer.disconnect();
       }
     });
