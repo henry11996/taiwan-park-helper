@@ -2,6 +2,7 @@ console.log("members loaded")
 
 var members = {}
 var hasRegisterEvent = false
+console.log(hasRegisterEvent)
 const memberKey = '身分證字號'
 const injectSelectorIds = ['member', 'collapseOne', 'collapseTwo', 'collapseFour'] // 'ContentPlaceHolder1_applydiv', 'ContentPlaceHolder1_upLeader'
 
@@ -13,25 +14,29 @@ function injectSelectors() {
       $(`div[id^='${id}']`).each(function () {
         if ($(this).has('div#inject-selector-div').length == 0) {
           $(this).find('div.panel-body').prepend(autoSelector(members, 'inject-selector'))
+          reRegisterEvent()
         }
       })
     } else if (!$(`div#${id} #inject-selector`).length && $(`div#${id} input[name*='name']`).length) {
       // 其他申請人資料
       $(autoSelector(members, 'inject-selector')).insertAfter(`#${id} .checkbox`)
+      reRegisterEvent()
     }
   })
-  if (!hasRegisterEvent) {
-    hasRegisterEvent = true
-    $("select[id^='inject-selector']").off('change');
-    $("select[id^='inject-selector']").on('change', function (e) {
-      // console.log('member ' + e.target.value)
-      autoFill(e, members, '.panel-body')
-    })
-  }
+
+
 }
 
 function removeSelectors() {
   $("div#inject-selector-div").remove()
+}
+
+function reRegisterEvent() {
+  $("select[id^='inject-selector']").off('change');
+  $("select[id^='inject-selector']").on('change', function (e) {
+    // console.log('member ' + e.target.value)
+    autoFill(e, members, '.panel-body')
+  })
 }
 
 function autoFill(e, members, parentFormClass) {
@@ -124,8 +129,8 @@ waitForElm("div:contains('隊員資料')").then(e => {
   $("<a></a>").text("點此下載檔案").attr("download", "登山人員範例檔.xlsx").attr("target", "__blank").css("color", "#0000cc").attr("href", xlsxFile).appendTo(link)
   $("<p></p>").text("(注意：請勿修改範例檔欄位名稱)").addClass("REDWD_b").appendTo(readme)
   $("<p></p>").text("3. 點選右邊的上傳，並選擇填寫完畢的檔案").appendTo(readme)
-  $("<p></p>").text("4. 檔案上傳成功後，即可在姓名欄位上方看到自動填入選項").appendTo(readme)
-  $("<p></p>").text("5. 如果要修改自動填入的資料，可直接修改或重新上傳").appendTo(readme)
+  $("<p></p>").text("4. 檔案上傳成功後，即可在領隊資料、隊員資料等位子看到自動填入選項").appendTo(readme)
+  $("<p></p>").text("5. 若要修改自動填入的資料，可手動修改或重新上傳").appendTo(readme)
 
   const label = $("<label></label>")
     .attr("for", "member-file-upload")
