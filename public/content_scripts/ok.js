@@ -12,7 +12,7 @@ waitForElm("div.content ul li").then(() => {
         } else if (key.includes('編號')) {
             applyDate[key] = texts[1].split(' ')[0]
         } else {
-            applyDate[texts[0]] = texts[1].trim()
+            applyDate[texts[0]] = texts[1]?.trim()
         }
     })
     applyDate['url'] = window.location.href
