@@ -30,8 +30,9 @@ waitForElm("div.content ul li").then(() => {
 
 
     $("input#save_to_extension").on("click", function () {
-        applyDate['tripName'] = window.prompt("請取個簡短方便記憶的名稱，例如：2021-01-01 玉山單攻", applyDate['入園日期'][0] + " " + applyDate['申請路線'])
-        console.log(JSON.stringify(applyDate))
+        const tripName = window.prompt("請取個簡短方便記憶的名稱，例如：2021-01-01 玉山單攻", applyDate['入園日期'][0] + " " + applyDate['申請路線'])
+        if (!tripName) return
+        applyDate['tripName'] = tripName
         saveOk(applyDate)
     })
 })
