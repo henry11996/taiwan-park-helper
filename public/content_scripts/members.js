@@ -153,6 +153,8 @@ waitForElm("div:contains('隊員資料')").then(e => {
 
   $('#member-file-upload').on('change', async function (e) {
     if (e.target.value == '') return
+    if (!confirm(`請從事登山活動者應主動自行評估自身經驗、裝備、技術能力、體能、天候情況及確認活動所帶來之風險，且應承擔自身安全責任。
+    又因山區步道易受天然環境影響，造成無法預期之災損或阻斷，請登山民眾遇有通行安全疑慮時，切勿強行通過以維自身安全。`)) return
     const file = e.target.files[0]
     // toBase64(file).then((res) => {
     //   console.log(res)

@@ -17,16 +17,6 @@ waitForElm("div.content ul li").then(() => {
     })
     applyDate['url'] = window.location.href
 
-    const textDiv = $("<div></div>")
-        .addClass("BU")
-        .addClass("col-sm-6")
-        .insertBefore($("div.alert"))
-
-    $("<input>")
-        .addClass("form-control")
-        .attr("id", "trip_name")
-        .attr("placeholder", "請取個方便記憶的名稱，例如：2021-01-01 玉山單攻")
-        .appendTo(textDiv)
 
     const btnDiv = $("<div></div>")
         .addClass("BU")
@@ -37,12 +27,11 @@ waitForElm("div.content ul li").then(() => {
         .attr("id", "save_to_extension")
         .attr("value", "儲存到 Climber 擴充功能")
         .appendTo(btnDiv)
-        
-    $("#trip_name").on("change", function () {
-        applyDate['tripName'] = $(this).val()
-    })
+
 
     $("input#save_to_extension").on("click", function () {
+        applyDate['tripName'] = window.prompt("請取個簡短方便記憶的名稱，例如：2021-01-01 玉山單攻", applyDate['入園日期'][0] + " " + applyDate['申請路線'])
+        console.log(JSON.stringify(applyDate))
         saveOk(applyDate)
     })
 })

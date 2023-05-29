@@ -9,7 +9,7 @@ const getStorage = () => {
 }
 
 const store = reactive({
-    trips: {},
+    trips: [],
 
     saveTrip(trip) {
         this.trips.push(trip)
@@ -25,17 +25,17 @@ const store = reactive({
     async loadFromStorage() {
         const storage = getStorage()
         if (!storage) {
-            // this.trips = { "nnnnn": { "入園日期": ["2023-05-23", "2023-05-23"], "申請人數": "1", "申請時間": "2023-05-16T13:12:00.000Z", "申請狀態": "核准入園", "申請編號": "Y112063142", "申請路線": "玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )", "隊伍名稱": "nnnnn" } }
+            this.trips = [{ "申請編號": "Yxxxxxxxxx", "隊伍名稱": "xxxxx", "申請時間": "2023-01-01 00:00:00", "申請人數": "1", "申請路線": "玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )", "入園日期": ["2023-01-01", "2023-01-10"], "申請狀態": "核准入園", "url": "https://npm.cpami.gov.tw/apply_ok.aspx?serial=Y112063142&a_id=1666654", "tripName": "2023-05-23 玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )" }]
         } else {
             this.trips = await chrome.storage.sync.get()
         }
+        this.trips.sort((a, b) => new Date(b['入園日期'][0]) - new Date(a['入園日期'][0]))
         console.log(this.trips)
     },
 
-    display() {
-        this.loadFromStorage(() => {
-            console.debug("displayTrips", this.trips)
-        })
+    delete(tripSerial) {
+        this.trips = this.trips.filter(trip => trip['申請編號'] !== tripSerial)
+        this.saveToStorage()
     }
 })
 
