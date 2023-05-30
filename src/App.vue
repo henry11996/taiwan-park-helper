@@ -8,8 +8,8 @@ const tab = ref("main");
 </script>
 
 <template>
-  <v-theme-provider theme="dark" with-background>
-      <v-tabs fixed-tabs bg-color="green-darken-4" v-model="tab">
+  <v-theme-provider with-background>
+      <v-tabs fixed-tabs bg-color="#377DB6" color="white" v-model="tab">
         <v-tab stacked value="main">
           <v-icon size="x-small" start icon="fas fa-home" />
           主頁

@@ -128,9 +128,9 @@ waitForElm("div:contains('隊員資料')").then(e => {
   const link = $("<p></p>").text("2. ").appendTo(readme)
   $("<a></a>").text("點此下載檔案").attr("download", "登山人員範例檔.xlsx").attr("target", "__blank").css("color", "#0000cc").attr("href", xlsxFile).appendTo(link)
   $("<p></p>").text("(注意：請勿修改範例檔欄位名稱)").addClass("REDWD_b").appendTo(readme)
-  $("<p></p>").text("3. 點選右邊的上傳，並選擇填寫完畢的檔案").appendTo(readme)
-  $("<p></p>").text("4. 檔案上傳成功後，即可在領隊資料、隊員資料等位子看到自動填入選項").appendTo(readme)
-  $("<p></p>").text("5. 若要修改自動填入的資料，可手動修改或重新上傳").appendTo(readme)
+  $("<p></p>").text("3. 點選右邊的上傳區塊，並選擇填寫完畢的檔案").appendTo(readme)
+  $("<p></p>").text("4. 檔案上傳成功後，即可在領隊資料、隊員資料等位子看到'自動填入'選項").appendTo(readme)
+  $("<p></p>").text("5. 上傳完畢若需修改資料，可直接手動編輯或重新上傳").appendTo(readme)
 
   const label = $("<label></label>")
     .attr("for", "member-file-upload")
