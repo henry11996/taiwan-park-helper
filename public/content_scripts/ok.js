@@ -24,6 +24,7 @@ waitForElm("div.content ul li").then(() => {
 
     $("<input>")
         .addClass("BUTTON_back")
+        .css("background-color", "#377DB6")
         .attr("id", "save_to_extension")
         .attr("value", "儲存到 Climber 擴充功能")
         .appendTo(btnDiv)

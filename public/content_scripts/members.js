@@ -106,10 +106,10 @@ const toBase64 = file => new Promise((resolve, reject) => {
 waitForElm("div:contains('隊員資料')").then(e => {
   const block = $("<div></div>")
     .addClass("panel")
-    .css("background-color", "#390")
+    .css("background-color", "#CCE0E9")
     .css("padding", "10px")
     .css("margin-top", "13px")
-    .css("border", "10px solid darkorange")
+    .css("border", "10px solid #377DB6")
     .insertAfter($("div.text-right").first())
 
   const panel = $("<div></div>")
@@ -118,7 +118,7 @@ waitForElm("div:contains('隊員資料')").then(e => {
     .appendTo(block)
 
   const readme = $("<div></div>")
-    .css("color", "#fff")
+    // .css("color", "#fff")
     .css("width", "100%")
     .appendTo(panel)
 
@@ -138,7 +138,7 @@ waitForElm("div:contains('隊員資料')").then(e => {
     .css("display", "flex")
     .css("padding", "6px 12px")
     .css("cursor", "pointer")
-    .css("color", "#fff")
+    // .css("color", "#fff")
     .css("font-weight", "400")
     .css("width", "100%")
     .css("justify-content", "center")
@@ -173,7 +173,7 @@ waitForElm("div:contains('隊員資料')").then(e => {
   })
 
   $("<p></p>")
-    .css("color", "bisque")
+    .css("color", "#377DB6")
     .css("text-align", "center")
     .css("margin", "10px 0 0 0")
     .text("** 此區塊由擴充功能 Climber 提供 **").appendTo(block)
