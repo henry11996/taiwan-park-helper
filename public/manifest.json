@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Climber - 國家公園入園證申請助手",
-  "version": "0.0.1.12",
+  "version": "0.0.1.21",
   "description": "協助更快的申請入園證資料",
   "icons": {
     "16": "images/16.png",

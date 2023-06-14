@@ -19,17 +19,20 @@ const store = reactive({
     async saveToStorage() {
         const storage = getStorage()
         if (!storage) return
-        await chrome.storage.sync.set({ trips: JSON.stringify(this.trips) })
+        await chrome.storage.sync.set({ trips: this.trips.splice() })
     },
 
     async loadFromStorage() {
         const storage = getStorage()
+        let trips = []
         if (!storage) {
-            this.trips = [{ "申請編號": "Yxxxxxxxxx", "隊伍名稱": "xxxxx", "申請時間": "2023-01-01 00:00:00", "申請人數": "1", "申請路線": "峰 - 塔塔加 )", "入園日期": ["2023-05-01", "2023-01-10"], "申請狀態": "核准入園", "url": "https://npm.cpami.gov.tw/apply_ok.aspx?serial=Y112063142&a_id=1666654", "tripName": "2023-05-23 玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )" }, { "申請編號": "Yxxxxxxxxx", "隊伍名稱": "xxxxx", "申請時間": "2023-01-01 00:00:00", "申請人數": "1", "申請路線": "玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )", "入園日期": ["2023-02-01", "2023-01-10"], "申請狀態": "核准入園", "url": "https://npm.cpami.gov.tw/apply_ok.aspx?serial=Y112063142&a_id=1666654", "tripName": "2023-05-23 玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )" } ]
+            trips = [{ "申請編號": "Yxxxxxxxxx", "隊伍名稱": "xxxxx", "申請時間": "2023-01-01 00:00:00", "申請人數": "1", "申請路線": "峰 - 塔塔加 )", "入園日期": ["2023-05-01", "2023-01-10"], "申請狀態": "核准入園", "url": "https://npm.cpami.gov.tw/apply_ok.aspx?serial=Y112063142&a_id=1666654", "tripName": "2023-05-23 玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )" }, { "申請編號": "Yxxxxxxxxx", "隊伍名稱": "xxxxx", "申請時間": "2023-01-01 00:00:00", "申請人數": "1", "申請路線": "玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )", "入園日期": ["2023-02-01", "2023-01-10"], "申請狀態": "核准入園", "url": "https://npm.cpami.gov.tw/apply_ok.aspx?serial=Y112063142&a_id=1666654", "tripName": "2023-05-23 玉山線 / 玉山前峰單日往返(塔塔加 - 玉山前峰 - 塔塔加 )" } ]
         } else {
-            this.trips = await chrome.storage.sync.get()
+            const data = await chrome.storage.sync.get()
+            trips = data.trips || []
         }
-        this.trips.sort((a, b) => new Date(a['入園日期'][0]) - new Date(b['入園日期'][0]))
+        trips.sort((a, b) => new Date(a['入園日期'][0]) - new Date(b['入園日期'][0]))
+        this.trips = trips
         console.log(this.trips)
     },
 

@@ -18,8 +18,8 @@ const copy = async function (text) {
 </script>
 <template>
   <v-card color="#CCE0E9">
-    <v-card-text class="py-0" v-if="Object.keys(store.trips).length !== 0">
-      <v-card class="mt-2" v-for="(trip, name) in store.trips" :key="name" variant="outlined">
+    <v-card-text class="py-0" v-if="store.trips.length !== 0">
+      <v-card class="mt-2" v-for="(trip, i) in store.trips" :key="i" variant="outlined">
         <v-card-title class="pb-0">
           {{ trip['tripName'] }}
         </v-card-title>
