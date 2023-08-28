@@ -27,7 +27,7 @@ const copy = async function (text) {
         <v-card-text class="py-0">
           <p>申請編號：{{ trip["申請編號"] }} <v-btn variant="outlined" size="x-small" @click="copy(trip['申請編號'])">複製</v-btn></p>
           <p>申請人數：{{ trip["申請人數"] }}</p>
-          <p>申請狀態：{{ trip["申請狀態"] }}</p>
+          <!-- <p>申請狀態：{{ trip["申請狀態"] }}</p> -->
           <p>申請時間：{{ dayjs(trip["申請時間"]).locale('zh-tw').format('YYYY-MM-DD HH:mm:ss') }}</p>
           <p>申請路線：{{ trip["申請路線"] }}</p>
         </v-card-text>
@@ -46,6 +46,10 @@ const copy = async function (text) {
       <p>已注入自動選取功能到申請人員填入頁面</p>
       <p>
         <a target="_blank" href="https://npm.cpami.gov.tw/apply_1.aspx">請至登山人員申請頁面查看</a>
+      </p>
+      或看
+      <p>
+        <a target="_blank" href="https://henry11996.github.io/posts/mountain/climber/">使用教學</a>
       </p>
     </v-card-text>
   </v-card>

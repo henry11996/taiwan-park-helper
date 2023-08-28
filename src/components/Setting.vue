@@ -9,6 +9,12 @@ import { useStore } from "../js/store.js";
   <v-card color="#CCE0E9">
     <v-card-text>
       <v-col>
+        <v-btn prepend-icon="fa-brands fa-facebook" href="https://npm.cpami.gov.tw/apply_1.aspx"
+          target="__blank">
+          入員申請
+        </v-btn>
+      </v-col>
+      <v-col>
         <v-btn prepend-icon="fa-brands fa-facebook" href="https://www.facebook.com/groups/935203886528583/"
           target="__blank">
           登山通報站
